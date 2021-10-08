@@ -38,8 +38,23 @@ def buscar_ciudades(pais,archivo):
 
     return ciudades
 
+def contar_ciudades(pais,ciudades):
+    
+    ciudades[0][0] = 'Rank'
+    total_ciudades = len(ciudades) - 1
+    print(f'Ciudades encontradas en {pais}:', total_ciudades)
 
-def guardar_busqueda(formato,ciudades,pais):
+    return total_ciudades
+    
+def imprimir_busqueda(ciudades):
+    
+    print(tabulate(ciudades,headers="firstrow",tablefmt="grid"))
+    print('\n')
+
+
+def guardar_busqueda(ciudades,pais):
+
+    formato = input('Escribe csv o json para guardar la salida en ese formato o cualquier otro valor para salir sin guardar: ')
 
     if formato in ['csv','json']:
 
@@ -78,13 +93,8 @@ if __name__ == '__main__':
     pais = input('Pais a buscar: ')
 
     ciudades = buscar_ciudades(pais,archivo)
-    ciudades[0][0] = 'Rank'
-    total_ciudades = len(ciudades) - 1
-    
-    print(f'Ciudades encontradas en {pais}:', total_ciudades)
+    total_ciudades = contar_ciudades(pais,ciudades)
 
     if total_ciudades > 0:
-        print(tabulate(ciudades,headers="firstrow",tablefmt="grid"))
-        print('\n')
-        formato = input('Escribe csv o json para guardar la salida en ese formato o cualquier otro valor para salir sin guardar: ')
-        guardar_busqueda(formato,ciudades,pais)
+        imprimir_busqueda(ciudades)
+        guardar_busqueda(ciudades,pais)
