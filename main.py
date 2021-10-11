@@ -31,14 +31,16 @@ def buscar_ciudades(pais,archivo):
                     if pais in dict_pais["Country"]:
                         ciudades.append(list(dict_pais.values()))
 
-        ciudades[0][0] = 'Rank'
+        else:
+            raise IndexError
 
-    except FileNotFoundError:
+    except (FileNotFoundError,IndexError):
 
-        print(f'Error: Archivo {archivo} no encontrado!')
+        print(f'Error: Archivo {archivo} no encontrado o formato no soportado!')
         sys.exit(0)
 
     return ciudades
+
 
 def imprimir_busqueda(ciudades):
     
@@ -46,6 +48,7 @@ def imprimir_busqueda(ciudades):
     print(f'Ciudades encontradas:', total_ciudades)
 
     if total_ciudades > 0:
+        ciudades[0][0] = 'Rank'
         print(tabulate(ciudades,headers="firstrow",tablefmt="grid"))
         print('\n')
 
