@@ -1,10 +1,11 @@
 #!/usr/bin/python3
+# Repositorio en GitHub: https://github.com/rulerdo/buscador_ciudades_dev
+# Clonar repo: git clone git@github.com:rulerdo/buscador_ciudades_dev.git
+# Instalar modulo externo tabulate: pip3 install tabulate
 # Datos descargados del sitio: https://worldpopulationreview.com/world-cities
 
+import csv, json, sys
 from tabulate import tabulate
-import json
-import csv
-import sys
 
 
 def buscar_ciudades(pais,archivo):
