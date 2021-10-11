@@ -56,30 +56,27 @@ def guardar_busqueda(ciudades,pais):
 
     formato = input('Escribe csv o json para guardar la salida en ese formato o cualquier otro valor para salir sin guardar: ')
 
-    if formato in ['csv','json']:
+    archivo_ciudades = pais + '.' + formato
+    respuesta = f'Archivo guardado como {archivo_ciudades}'
 
-        archivo_ciudades = pais + '.' + formato
+    if formato == 'csv':
 
-        if formato == 'csv':
+        with open(archivo_ciudades,'w') as f:
+            escritor_csv = csv.writer(f, delimiter=',')
+            for ciudad in ciudades:
+                escritor_csv.writerow(ciudad)
+            
+    elif formato == 'json':
 
-            with open(archivo_ciudades,'w') as f:
-                escritor_csv = csv.writer(f, delimiter=',')
-                for ciudad in ciudades:
-                    escritor_csv.writerow(ciudad)
-                
-        if formato == 'json':
+        lista_ciudades = list()
+        llaves = ciudades.pop(0)
+        for valores in ciudades:
+            diccionario_ciudad = dict(zip(llaves,valores))
+            lista_ciudades.append(diccionario_ciudad)
 
-            lista_ciudades = list()
-            llaves = ciudades.pop(0)
-            for valores in ciudades:
-                diccionario_ciudad = dict(zip(llaves,valores))
-                lista_ciudades.append(diccionario_ciudad)
-
-            with open(archivo_ciudades,'w') as f:
-                json.dump(lista_ciudades, f, indent=4)
-                                
-        respuesta = f'Archivo guardado como {archivo_ciudades}'
-
+        with open(archivo_ciudades,'w') as f:
+            json.dump(lista_ciudades, f, indent=4)
+                            
     else:
 
         respuesta = 'Archivo NO guardado'
